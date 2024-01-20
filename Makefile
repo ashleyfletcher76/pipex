@@ -6,36 +6,44 @@
 #    By: asfletch <asfletch@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/12 15:07:52 by asfletch          #+#    #+#              #
-#    Updated: 2024/01/12 15:11:23 by asfletch         ###   ########.fr        #
+#    Updated: 2024/01/20 16:41:57 by asfletch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = pipex
+NAME		= pipex
 
-SRCS = main.c \
+LIBFT_DIR	= libft
+LIBFT_LIB	= $(LIBFT_DIR)/libft.a
 
-BONUS = \
+SRCS		= src/main.c src/parse_args.c src/utils.c src/error_free.c \
+			src/the_fam.c \
 
-CC =			gcc
-RM =			rm -f
-CFLAGS =		-Wall -Wextra -Werror -g
-OBJS =			$(SRCS:.c=.o)
-BONUS_OBJS =	$(BONUS:.c=.o)
+INCLUDES	= -I includes -I header -I $(LIBFT_DIR)
+CC			= gcc
+CFLAGS		= -Wall -Wextra -Werror -g $(INCLUDES)
+OBJS		= $(SRCS:.c=.o)
+RM			= rm -f
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-		ar rcs $(NAME) $(OBJS)
+$(LIBFT_LIB):
+			make -C $(LIBFT_DIR)
+			make -C $(LIBFT_DIR) bonus
+
+$(NAME): $(LIBFT_LIB) $(OBJS)
+		$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIBFT_DIR) -lft
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS) $(BONUS_OBJS)
+		$(RM) $(OBJS)
+		make -C $(LIBFT_DIR) clean
 
 fclean: clean
-		rm -f $(NAME)
+		$(RM) $(NAME)
+		make -C $(LIBFT_DIR) fclean
 
 re:		fclean all
-
-bonus: $(OBJS) $(BONUS_OBJS)
-		ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
 
 .PHONY: all clean fclean re
