@@ -6,7 +6,7 @@
 /*   By: asfletch <asfletch@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:41:31 by asfletch          #+#    #+#             */
-/*   Updated: 2024/01/22 16:52:03 by asfletch         ###   ########.fr       */
+/*   Updated: 2024/01/22 17:12:50 by asfletch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	execute_child_one(t_pipex pipex, int i, char **envp)
 {
 	if (i == 0)
 	{
+		open_the_files(&pipex, 0);
 		pipex.path = get_path(pipex, i, envp);
 		if (!pipex.path)
 		{
@@ -46,7 +47,6 @@ void	execute_child_one(t_pipex pipex, int i, char **envp)
 			clean_exit (pipex);
 			exit (127);
 		}
-		open_the_files(&pipex, 0);
 		if (dup2(pipex.infile_fd, STDIN_FILENO) == - 1)
 		{
 			close (pipex.infile_fd);
@@ -70,8 +70,8 @@ void	execute_child_one(t_pipex pipex, int i, char **envp)
 
 void	execute_child_two(t_pipex pipex, int i, char **envp)
 {
-	pipex.path = get_path(pipex, i, envp);
 	open_the_files (&pipex, 1);
+	pipex.path = get_path(pipex, i, envp);
 	if (dup2(pipex.fd[0], STDIN_FILENO) == - 1)
 	{
 		close_fds (pipex);

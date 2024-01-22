@@ -6,7 +6,7 @@
 /*   By: asfletch <asfletch@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 09:24:27 by asfletch          #+#    #+#             */
-/*   Updated: 2024/01/22 16:52:18 by asfletch         ###   ########.fr       */
+/*   Updated: 2024/01/22 17:11:54 by asfletch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,14 @@ char	*get_path(t_pipex pipex, int cmd_index, char **envp)
 		if (access(full_path, X_OK) == 0)
 		{
 			free_arr (all_paths);
+			ft_printf("here\n");
 			return (full_path);
 		}
 		i++;
 		free (full_path);
 	}
 	free_arr (all_paths);
-	my_three_write("pipex: ", pipex.command[cmd_index].cmd, ": command not found", 2);
+	my_two_write("zsh: command not found: ", pipex.command[cmd_index].cmd, 2);
 	clean_exit (pipex);
 	exit (127);
 }
