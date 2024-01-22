@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asfletch <asfletch@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: asfletch <asfletch@student.42heilbronn>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 09:24:27 by asfletch          #+#    #+#             */
-/*   Updated: 2024/01/22 17:11:54 by asfletch         ###   ########.fr       */
+/*   Updated: 2024/01/22 19:28:50 by asfletch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ char	*get_path(t_pipex pipex, int cmd_index, char **envp)
 	if (pipex.command[cmd_index].cmd[0] == '/')
 		return strdup(pipex.command[cmd_index].cmd);
 	all_paths = ft_split(get_env("PATH", envp), ':');
+	if (!all_paths)
+	{
+		clean_exit (pipex);
+		exit (EXIT_FAILURE);
+	}
 	while (all_paths[i] != NULL)
 	{
 		temp_path = ft_strjoin(all_paths[i], "/");
@@ -73,13 +78,13 @@ char	*get_path(t_pipex pipex, int cmd_index, char **envp)
 		if (access(full_path, X_OK) == 0)
 		{
 			free_arr (all_paths);
-			ft_printf("here\n");
 			return (full_path);
 		}
 		i++;
 		free (full_path);
 	}
 	free_arr (all_paths);
+	// free (full_path);
 	my_two_write("zsh: command not found: ", pipex.command[cmd_index].cmd, 2);
 	clean_exit (pipex);
 	exit (127);

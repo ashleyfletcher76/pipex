@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asfletch <asfletch@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: asfletch <asfletch@student.42heilbronn>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:07:43 by asfletch          #+#    #+#             */
-/*   Updated: 2024/01/22 16:50:01 by asfletch         ###   ########.fr       */
+/*   Updated: 2024/01/22 19:25:54 by asfletch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	following_main(t_pipex pipex, char **envp)
 		pipex.pid[i] = fork();
 		if (pipex.pid[i] == 0)
 			execute_child_one (pipex, i, envp);
-		else if (pipex.pid < 0)
+		else if (pipex.pid[i] < 0)
 		{
 			clean_exit (pipex);
 			perror ("Fork failure");
@@ -35,6 +35,7 @@ int	following_main(t_pipex pipex, char **envp)
 		}
 		i++;
 	}
+	clean_exit (pipex);
 	close(pipex.fd[0]);
 	close(pipex.fd[1]);
 	wait_for_child(pipex, pipex.cmd_argc);

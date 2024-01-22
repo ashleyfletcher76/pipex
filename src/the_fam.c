@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   the_fam.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asfletch <asfletch@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: asfletch <asfletch@student.42heilbronn>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:41:31 by asfletch          #+#    #+#             */
-/*   Updated: 2024/01/22 17:12:50 by asfletch         ###   ########.fr       */
+/*   Updated: 2024/01/22 19:23:12 by asfletch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

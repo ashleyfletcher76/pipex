@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asfletch <asfletch@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: asfletch <asfletch@student.42heilbronn>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 14:19:17 by asfletch          #+#    #+#             */
-/*   Updated: 2024/01/22 11:56:48 by asfletch         ###   ########.fr       */
+/*   Updated: 2024/01/22 19:14:56 by asfletch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ void	clean_exit(t_pipex pipex)
 	i = 0;
 	while (i < pipex.cmd_argc)
 	{
-		// free(pipex.command[i].cmd);
-		// free(pipex.command[i].cmd_arg);
-		free_arr(pipex.command[i].args);
+		free_arr (pipex.command[i].args);
 		i++;
 	}
 	free(pipex.command);
