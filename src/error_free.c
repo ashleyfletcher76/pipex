@@ -6,11 +6,38 @@
 /*   By: asfletch <asfletch@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 14:19:17 by asfletch          #+#    #+#             */
-/*   Updated: 2024/01/21 09:38:32 by asfletch         ###   ########.fr       */
+/*   Updated: 2024/01/22 11:56:48 by asfletch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../includes/pipex.h"
+
+// void	arg_failues(t_pipex pipex, int cmd_index)
+// {
+
+// }
+
+void	close_fds(t_pipex pipex)
+{
+	close (pipex.fd[0]);
+	close (pipex.fd[1]);
+}
+
+void	clean_exit(t_pipex pipex)
+{
+	int	i;
+
+	i = 0;
+	while (i < pipex.cmd_argc)
+	{
+		// free(pipex.command[i].cmd);
+		// free(pipex.command[i].cmd_arg);
+		free_arr(pipex.command[i].args);
+		i++;
+	}
+	free(pipex.command);
+}
+
 
 void	free_arr(char **arr)
 {

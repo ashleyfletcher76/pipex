@@ -6,11 +6,36 @@
 /*   By: asfletch <asfletch@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 09:24:27 by asfletch          #+#    #+#             */
-/*   Updated: 2024/01/21 15:24:43 by asfletch         ###   ########.fr       */
+/*   Updated: 2024/01/22 14:37:57 by asfletch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../includes/pipex.h"
+
+int	open_the_files(t_pipex *pipex, int index)
+{
+	if (index == 0)
+	{
+		pipex->infile_fd = open(pipex->infile, O_RDONLY);
+		if (pipex->infile_fd == -1)
+		{
+			my_three_write ("pipex: ", pipex->infile, ": No such file or directory", 2);
+			clean_exit (*pipex);
+			exit (EXIT_FAILURE);
+		}
+	}
+	if (index == 1)
+	{
+		pipex->outfile_fd = open(pipex->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (pipex->outfile_fd == - 1)
+		{
+			perror ("pipex: output\n");
+			clean_exit (*pipex);
+			exit (EXIT_FAILURE);
+		}
+	}
+	return (EXIT_SUCCESS);
+}
 
 char	*get_env(const char *name, char **envp)
 {
@@ -28,7 +53,7 @@ char	*get_env(const char *name, char **envp)
 	return (envp[0]);
 }
 
-char	*get_path(char *cmd, char **envp)
+char	*get_path(t_pipex pipex, int cmd_index, char **envp)
 {
 	int		i;
 	char	**all_paths;
@@ -36,11 +61,13 @@ char	*get_path(char *cmd, char **envp)
 	char	*full_path;
 
 	i = 0;
+	if (pipex.command[cmd_index].cmd[0] == '/')
+		return strdup(pipex.command[cmd_index].cmd);
 	all_paths = ft_split(get_env("PATH", envp), ':');
 	while (all_paths[i] != NULL)
 	{
 		temp_path = ft_strjoin(all_paths[i], "/");
-		full_path = ft_strjoin(temp_path, cmd);
+		full_path = ft_strjoin(temp_path, pipex.command[cmd_index].cmd);
 		free (temp_path);
 		if (access(full_path, X_OK) == 0)
 		{
@@ -51,6 +78,22 @@ char	*get_path(char *cmd, char **envp)
 		free (full_path);
 	}
 	free_arr (all_paths);
-	ft_printf("zsh: command not found: %s\n", cmd);
-	exit (EXIT_FAILURE);
+	my_three_write("pipex: ", pipex.command[cmd_index].cmd, ": command not found", 2);
+	clean_exit (pipex);
+	exit (127);
+}
+
+void	my_two_write(char *s, char *s1, int fd)
+{
+	ft_putstr_fd(s, fd);
+	ft_putstr_fd(s1, fd);
+	ft_putchar_fd('\n', fd);
+}
+
+void	my_three_write(char *s, char *s1, char *s2, int fd)
+{
+	ft_putstr_fd(s, fd);
+	ft_putstr_fd(s1, fd);
+	ft_putstr_fd(s2, fd);
+	ft_putchar_fd('\n', fd);
 }

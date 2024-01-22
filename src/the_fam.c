@@ -6,60 +6,87 @@
 /*   By: asfletch <asfletch@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:41:31 by asfletch          #+#    #+#             */
-/*   Updated: 2024/01/21 15:45:23 by asfletch         ###   ########.fr       */
+/*   Updated: 2024/01/22 14:53:51 by asfletch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../includes/pipex.h"
 
-void	execute_command(char *cmd, char **args, char **envp)
+void	execute_command(t_pipex pipex, int i, char **envp)
 {
-	char	*path;
-
-	path = get_path(cmd, envp);
-	if (path)
+	if (pipex.path)
 	{
-		if (execve(path, args, NULL) == -1)
+		if (execve(pipex.path, pipex.command[i].args, envp) == -1)
 		{
 			perror("execve");
-			free (path);
-			exit (EXIT_FAILURE);
+			free (pipex.path);
+			clean_exit (pipex);
+			exit (127);
 		}
-		free (path);
+		free (pipex.path);
 	}
 	else
 	{
-		ft_printf("Command not found: %s\n", cmd);
-		exit (EXIT_FAILURE);
+		ft_printf("Command not found: %s\n", pipex.command[i].cmd);
+		clean_exit (pipex);
+		exit (126);
 	}
 }
 
-void	execute_child(t_pipex pipex, int i, char **envp)
+void	execute_child_one(t_pipex pipex, int i, char **envp)
 {
-	int		fd;
-	char	*path;
-
 	if (i == 0)
 	{
-		path = get_path(pipex.command[i].cmd, envp);
-		dup2(pipex.infile, STDIN_FILENO);
-		close(pipex.infile);
-		dup2(pipex.fd[1], STDOUT_FILENO);
-		close(pipex.fd[0]);
-		close(pipex.fd[1]);
-		execute_command(pipex.command[i].cmd, pipex.command[i].args, envp);
+		pipex.path = get_path(pipex, i, envp);
+		if (!pipex.path)
+		{
+			my_three_write("env: ", pipex.command[i].cmd, ": No such file or directory", 2);
+			clean_exit (pipex);
+			exit (12);
+		}
+		open_the_files(&pipex, 0);
+		if (dup2(pipex.infile_fd, STDIN_FILENO) == - 1)
+		{
+			close (pipex.infile_fd);
+			close_fds (pipex);
+			clean_exit (pipex);
+			exit (EXIT_FAILURE);
+		}
+		close(pipex.infile_fd);
+		if (dup2(pipex.fd[1], STDOUT_FILENO) == - 1)
+		{
+			close_fds (pipex);
+			clean_exit (pipex);
+			exit (EXIT_FAILURE);
+		}
+		close_fds (pipex);
+		execute_command(pipex, i, envp);
 	}
 	if (i == 1)
+		execute_child_two(pipex, i, envp);
+}
+
+void	execute_child_two(t_pipex pipex, int i, char **envp)
+{
+	pipex.path = get_path(pipex, i, envp);
+	open_the_files (&pipex, 1);
+	if (dup2(pipex.fd[0], STDIN_FILENO) == - 1)
 	{
-		path = get_path(pipex.command[i].cmd, envp);
-		fd = open(pipex.outfile, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-		dup2(pipex.fd[0], STDIN_FILENO);
-		dup2(fd, STDOUT_FILENO);
-		close(pipex.fd[0]);
-		close(pipex.fd[1]);
-		close(fd);
-		execute_command(pipex.command[i].cmd, pipex.command[i].args, envp);
+		close_fds (pipex);
+		close(pipex.outfile_fd);
+		clean_exit (pipex);
+		exit (EXIT_FAILURE);
 	}
+	if (dup2(pipex.outfile_fd, STDOUT_FILENO) == - 1)
+	{
+		close_fds (pipex);
+		close(pipex.outfile_fd);
+		clean_exit (pipex);
+		exit (EXIT_FAILURE);
+	}
+	close_fds (pipex);
+	close(pipex.outfile_fd);
+	execute_command(pipex, i, envp);
 }
 
 void	wait_for_child(t_pipex pipex, int num_children)
@@ -74,5 +101,7 @@ void	wait_for_child(t_pipex pipex, int num_children)
 		i++;
 	}
 	if (WIFEXITED(status))
+	{
 		exit(WEXITSTATUS(status));
+	}
 }
