@@ -6,16 +6,11 @@
 /*   By: asfletch <asfletch@student.42heilbronn>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 14:19:17 by asfletch          #+#    #+#             */
-/*   Updated: 2024/01/22 19:14:56 by asfletch         ###   ########.fr       */
+/*   Updated: 2024/01/22 20:46:33 by asfletch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
-
-// void	arg_failues(t_pipex pipex, int cmd_index)
-// {
-
-// }
 
 void	close_fds(t_pipex pipex)
 {
@@ -28,14 +23,16 @@ void	clean_exit(t_pipex pipex)
 	int	i;
 
 	i = 0;
-	while (i < pipex.cmd_argc)
+	if (pipex.command != NULL)
 	{
-		free_arr (pipex.command[i].args);
-		i++;
+		while (i < pipex.cmd_argc)
+		{
+			free_arr (pipex.command[i].args);
+			i++;
+		}
+		free(pipex.command);
 	}
-	free(pipex.command);
 }
-
 
 void	free_arr(char **arr)
 {
@@ -52,3 +49,32 @@ void	free_arr(char **arr)
 		free (arr);
 	}
 }
+
+// void	clean_exit(t_pipex pipex)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (i < pipex.cmd_argc)
+// 	{
+// 		free_arr (pipex.command[i].args);
+// 		i++;
+// 	}
+// 	free(pipex.command);
+// }
+
+// void	free_arr(char **arr)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	if (arr)
+// 	{
+// 		while (arr[i] != NULL)
+// 		{
+// 			free (arr[i]);
+// 			i++;
+// 		}
+// 		free (arr);
+// 	}
+// }

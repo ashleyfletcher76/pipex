@@ -6,7 +6,7 @@
 /*   By: asfletch <asfletch@student.42heilbronn>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:07:43 by asfletch          #+#    #+#             */
-/*   Updated: 2024/01/22 19:25:54 by asfletch         ###   ########.fr       */
+/*   Updated: 2024/01/22 21:04:19 by asfletch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,7 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc != 5)
 		exit (1);
-	// if (argv[1] == 'env')
-	// {
-	// 	get_path(pipex)
-	// }
+	// init_struct (pipex);
 	parse_args (argc, argv, &pipex);
 	pipex.infile = argv[1];
 	pipex.outfile = argv[argc - 1];
@@ -65,3 +62,14 @@ int	main(int argc, char **argv, char **env)
 	//atexit (leaks);
 	return (EXIT_SUCCESS);
 }
+
+// void	init_struct(t_pipex pipex)
+// {
+// 	pipex.infile_fd = - 1;
+// 	pipex.outfile_fd = - 1;
+// 	pipex.cmd_argc = 0;
+// 	pipex.path = NULL;
+// 	pipex.command->cmd = NULL;
+// 	pipex.fd[0] = -1;
+// 	pipex.fd[1] = -1;
+// }
