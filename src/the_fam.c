@@ -6,7 +6,7 @@
 /*   By: asfletch <asfletch@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:41:31 by asfletch          #+#    #+#             */
-/*   Updated: 2024/01/22 14:53:51 by asfletch         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:52:03 by asfletch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	execute_command(t_pipex pipex, int i, char **envp)
 	}
 	else
 	{
-		ft_printf("Command not found: %s\n", pipex.command[i].cmd);
+		// ft_printf("Command not found: %s\n", pipex.command[i].cmd);
+		my_two_write("Command not found: ", pipex.command[i].cmd, 127);
 		clean_exit (pipex);
 		exit (126);
 	}
@@ -40,9 +41,10 @@ void	execute_child_one(t_pipex pipex, int i, char **envp)
 		pipex.path = get_path(pipex, i, envp);
 		if (!pipex.path)
 		{
+			//fprintf(stderr, "Debug: Command not found - %s\n", pipex.command[i].cmd);
 			my_three_write("env: ", pipex.command[i].cmd, ": No such file or directory", 2);
 			clean_exit (pipex);
-			exit (12);
+			exit (127);
 		}
 		open_the_files(&pipex, 0);
 		if (dup2(pipex.infile_fd, STDIN_FILENO) == - 1)

@@ -6,7 +6,7 @@
 /*   By: asfletch <asfletch@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 09:24:27 by asfletch          #+#    #+#             */
-/*   Updated: 2024/01/22 14:37:57 by asfletch         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:52:18 by asfletch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ char	*get_env(const char *name, char **envp)
 			return (envp[i] + len + 1);
 		i++;
 	}
-	return (envp[0]);
+	return (NULL);
+	//return (envp[0]);
 }
 
 char	*get_path(t_pipex pipex, int cmd_index, char **envp)

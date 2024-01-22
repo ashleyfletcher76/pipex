@@ -1,8 +1,0 @@
--rw-r--r--@  1 asfletch  2023_heilbronn   1794 Jan 21 15:36 Makefile
--rw-r--r--   1 asfletch  2023_heilbronn      7 Jan 12 15:14 README.md
-drwxr-xr-x   3 asfletch  2023_heilbronn    102 Jan 19 11:10 includes
-drwxr-xr-x  20 asfletch  2023_heilbronn    680 Jan 22 15:02 libft
--rw-r--r--   1 asfletch  2023_heilbronn      0 Jan 22 15:07 output
--rwxr-xr-x   1 asfletch  2023_heilbronn  53920 Jan 22 15:02 pipex
-drwxr-xr-x  12 asfletch  2023_heilbronn    408 Jan 22 15:02 src
--rw-r--r--   1 asfletch  2023_heilbronn     36 Jan 22 15:07 test.txt
