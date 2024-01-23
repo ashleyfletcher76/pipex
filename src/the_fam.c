@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   the_fam.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asfletch <asfletch@student.42heilbronn>    +#+  +:+       +#+        */
+/*   By: asfletch <asfletch@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:41:31 by asfletch          #+#    #+#             */
-/*   Updated: 2024/01/22 19:23:12 by asfletch         ###   ########.fr       */
+/*   Updated: 2024/01/23 07:27:57 by asfletch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ void	execute_command(t_pipex pipex, int i, char **envp)
 	}
 	else
 	{
-		// ft_printf("Command not found: %s\n", pipex.command[i].cmd);
-		my_two_write("Command not found: ", pipex.command[i].cmd, 127);
+		my_write_two ("Command not found: ", pipex.command[i].cmd, 127);
 		clean_exit (pipex);
 		exit (126);
 	}
@@ -42,8 +41,7 @@ void	execute_child_one(t_pipex pipex, int i, char **envp)
 		pipex.path = get_path(pipex, i, envp);
 		if (!pipex.path)
 		{
-			//fprintf(stderr, "Debug: Command not found - %s\n", pipex.command[i].cmd);
-			my_three_write("env: ", pipex.command[i].cmd, ": No such file or directory", 2);
+			my_write_three("env: ", pipex.command[i].cmd, ": No such file or directory", 2);
 			clean_exit (pipex);
 			exit (127);
 		}
@@ -103,7 +101,5 @@ void	wait_for_child(t_pipex pipex, int num_children)
 		i++;
 	}
 	if (WIFEXITED(status))
-	{
 		exit(WEXITSTATUS(status));
-	}
 }

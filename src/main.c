@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asfletch <asfletch@student.42heilbronn>    +#+  +:+       +#+        */
+/*   By: asfletch <asfletch@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:07:43 by asfletch          #+#    #+#             */
-/*   Updated: 2024/01/22 21:04:19 by asfletch         ###   ########.fr       */
+/*   Updated: 2024/01/23 06:00:26 by asfletch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
-
-void	leaks(void)
-{
-	system ("leaks pipex");
-}
 
 int	following_main(t_pipex pipex, char **envp)
 {
@@ -48,7 +43,6 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc != 5)
 		exit (1);
-	// init_struct (pipex);
 	parse_args (argc, argv, &pipex);
 	pipex.infile = argv[1];
 	pipex.outfile = argv[argc - 1];
@@ -59,17 +53,5 @@ int	main(int argc, char **argv, char **env)
 		return (128);
 	}
 	following_main(pipex, env);
-	//atexit (leaks);
 	return (EXIT_SUCCESS);
 }
-
-// void	init_struct(t_pipex pipex)
-// {
-// 	pipex.infile_fd = - 1;
-// 	pipex.outfile_fd = - 1;
-// 	pipex.cmd_argc = 0;
-// 	pipex.path = NULL;
-// 	pipex.command->cmd = NULL;
-// 	pipex.fd[0] = -1;
-// 	pipex.fd[1] = -1;
-// }

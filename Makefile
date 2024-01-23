@@ -6,7 +6,7 @@
 #    By: asfletch <asfletch@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/12 15:07:52 by asfletch          #+#    #+#              #
-#    Updated: 2024/01/21 15:36:28 by asfletch         ###   ########.fr        #
+#    Updated: 2024/01/23 07:31:01 by asfletch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIBFT_DIR	= libft
 LIBFT_LIB	= $(LIBFT_DIR)/libft.a
 
 SRCS		= src/main.c src/parse_args.c src/utils.c src/error_free.c \
-			src/the_fam.c \
+			src/the_fam.c src/get_path_and_env.c \
 
 INCLUDES	= -I includes -I header -I $(LIBFT_DIR)
 CC			= gcc

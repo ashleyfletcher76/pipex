@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asfletch <asfletch@student.42heilbronn>    +#+  +:+       +#+        */
+/*   By: asfletch <asfletch@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:08:52 by asfletch          #+#    #+#             */
-/*   Updated: 2024/01/22 20:56:52 by asfletch         ###   ########.fr       */
+/*   Updated: 2024/01/23 07:32:26 by asfletch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_pipex
 }	t_pipex;
 
 int		main(int argc, char **argv, char **env);
-void	init_struct(t_pipex pipex);
 int		parse_args(int argc, char **argv, t_pipex *pipex);
 int		open_the_files(t_pipex *pipex, int index);
 char	*get_path(t_pipex pipex, int cmd_index, char **envp);
@@ -52,16 +51,17 @@ void	execute_child_one(t_pipex pipex, int i, char **envp);
 void	execute_child_two(t_pipex pipex, int i, char **envp);
 void	execute_command(t_pipex pipex, int i, char **envp);
 
-void	my_two_write(char *s, char *s1, int fd);
-void	my_three_write(char *s, char *s1, char *s2, int fd);
+void	my_write_two(char *s, char *s1, int fd);
+void	my_write_three(char *s, char *s1, char *s2, int fd);
 
 void	wait_for_child(t_pipex pipex, int num_children);
 
-void	arg_failues(t_pipex pipex, int cmd_index);
 void	free_arr(char **arr);
 void	close_fds(t_pipex pipex);
 void	clean_exit(t_pipex pipex);
 int		is_whitespace(char c);
 int		is_empty_or_white(const char *str);
+void	check_cmd_or_empty(t_pipex *pipex, int i, int check_index);
+void	error_occured(t_pipex *pipex);
 
 #endif
