@@ -6,7 +6,7 @@
 /*   By: asfletch <asfletch@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 16:41:31 by asfletch          #+#    #+#             */
-/*   Updated: 2024/01/23 07:27:57 by asfletch         ###   ########.fr       */
+/*   Updated: 2024/01/23 13:36:39 by asfletch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,9 @@ void	execute_command(t_pipex pipex, int i, char **envp)
 			perror("execve");
 			free (pipex.path);
 			clean_exit (pipex);
-			exit (127);
+			exit (EXIT_FAILURE);
 		}
 		free (pipex.path);
-	}
-	else
-	{
-		my_write_two ("Command not found: ", pipex.command[i].cmd, 127);
-		clean_exit (pipex);
-		exit (126);
 	}
 }
 
@@ -41,24 +35,19 @@ void	execute_child_one(t_pipex pipex, int i, char **envp)
 		pipex.path = get_path(pipex, i, envp);
 		if (!pipex.path)
 		{
-			my_write_three("env: ", pipex.command[i].cmd, ": No such file or directory", 2);
+			my_write_three("pipex: ", pipex.command[i].cmd,
+				": command not found", 2);
 			clean_exit (pipex);
 			exit (127);
 		}
-		if (dup2(pipex.infile_fd, STDIN_FILENO) == - 1)
+		if (dup2(pipex.infile_fd, STDIN_FILENO) == -1)
 		{
 			close (pipex.infile_fd);
-			close_fds (pipex);
-			clean_exit (pipex);
-			exit (EXIT_FAILURE);
+			dup_failure (pipex);
 		}
 		close(pipex.infile_fd);
-		if (dup2(pipex.fd[1], STDOUT_FILENO) == - 1)
-		{
-			close_fds (pipex);
-			clean_exit (pipex);
-			exit (EXIT_FAILURE);
-		}
+		if (dup2(pipex.fd[1], STDOUT_FILENO) == -1)
+			dup_failure (pipex);
 		close_fds (pipex);
 		execute_command(pipex, i, envp);
 	}
@@ -70,17 +59,17 @@ void	execute_child_two(t_pipex pipex, int i, char **envp)
 {
 	open_the_files (&pipex, 1);
 	pipex.path = get_path(pipex, i, envp);
-	if (dup2(pipex.fd[0], STDIN_FILENO) == - 1)
+	if (dup2(pipex.fd[0], STDIN_FILENO) == -1)
 	{
 		close_fds (pipex);
 		close(pipex.outfile_fd);
 		clean_exit (pipex);
 		exit (EXIT_FAILURE);
 	}
-	if (dup2(pipex.outfile_fd, STDOUT_FILENO) == - 1)
+	if (dup2(pipex.outfile_fd, STDOUT_FILENO) == -1)
 	{
 		close_fds (pipex);
-		close(pipex.outfile_fd);
+		close (pipex.outfile_fd);
 		clean_exit (pipex);
 		exit (EXIT_FAILURE);
 	}

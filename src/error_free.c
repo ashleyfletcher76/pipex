@@ -6,11 +6,18 @@
 /*   By: asfletch <asfletch@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 14:19:17 by asfletch          #+#    #+#             */
-/*   Updated: 2024/01/23 06:00:05 by asfletch         ###   ########.fr       */
+/*   Updated: 2024/01/23 09:13:38 by asfletch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+
+void	dup_failure(t_pipex pipex)
+{
+	close_fds (pipex);
+	clean_exit (pipex);
+	exit (EXIT_FAILURE);
+}
 
 void	close_fds(t_pipex pipex)
 {

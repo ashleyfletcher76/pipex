@@ -6,7 +6,7 @@
 /*   By: asfletch <asfletch@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 09:24:27 by asfletch          #+#    #+#             */
-/*   Updated: 2024/01/23 07:30:38 by asfletch         ###   ########.fr       */
+/*   Updated: 2024/01/23 09:17:51 by asfletch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,17 @@ int	open_the_files(t_pipex *pipex, int index)
 		pipex->infile_fd = open(pipex->infile, O_RDONLY);
 		if (pipex->infile_fd == -1)
 		{
-			my_write_three ("pipex: ", pipex->infile, ": No such file or directory", 2);
+			my_write_three ("pipex: ", pipex->infile,
+				": No such file or directory", 2);
 			clean_exit (*pipex);
 			exit (EXIT_FAILURE);
 		}
 	}
 	if (index == 1)
 	{
-		pipex->outfile_fd = open(pipex->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (pipex->outfile_fd == - 1)
+		pipex->outfile_fd = open(pipex->outfile,
+				O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (pipex->outfile_fd == -1)
 		{
 			perror ("pipex: output\n");
 			clean_exit (*pipex);
