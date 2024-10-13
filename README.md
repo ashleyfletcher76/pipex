@@ -22,24 +22,24 @@ The **Pipex** program replicates the behavior of shell piping by taking the foll
 This command redirects the output of cmd1 to the input of cmd2 through a pipe, with file1 serving as the input to cmd1 and file2 as the output from cmd2.
 Problem Breakdown:
 
-    file1 is the input file, whose content is sent to the first command (cmd1).
-    The output of cmd1 is piped as the input to cmd2.
-    The output of cmd2 is then written to file2.
+file1 is the input file, whose content is sent to the first command (cmd1).
+The output of cmd1 is piped as the input to cmd2.
+The output of cmd2 is then written to file2.
 
 The project demonstrates:
 
-    File I/O redirection.
-    Creating child processes using fork().
-    Piping data between processes using pipe().
-    Executing commands using execve().
-    Properly handling errors and memory management.
+File I/O redirection.
+Creating child processes using fork().
+Piping data between processes using pipe().
+Executing commands using execve().
+Properly handling errors and memory management.
 
 ## Features
 
-    Handles simple pipes (cmd1 | cmd2).
-    Reads from an input file and writes to an output file.
-    Manages environment paths to locate executables.
-    Handles edge cases such as invalid commands, permission errors, and non-existent files.
+Handles simple pipes (cmd1 | cmd2).
+Reads from an input file and writes to an output file.
+Manages environment paths to locate executables.
+Handles edge cases such as invalid commands, permission errors, and non-existent files.
 
 ## Directory Structure
 
