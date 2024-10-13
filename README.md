@@ -61,11 +61,11 @@ The project demonstrates:
 └── README.md
 ```
 
-    Makefile: Compiles and links the program.
-    includes/: Contains the pipex.h header file, which defines function prototypes and shared structs.
-    src/: Contains the core source files for parsing arguments, managing the pipe, and handling errors.
-    libft/: The Libft library (custom C library with utility functions).
-    test.txt: Example input file for testing.
+Makefile: Compiles and links the program.
+includes/: Contains the pipex.h header file, which defines function prototypes and shared structs.
+src/: Contains the core source files for parsing arguments, managing the pipe, and handling errors.
+libft/: The Libft library (custom C library with utility functions).
+test.txt: Example input file for testing.
 
 ## Installation
 
@@ -89,10 +89,10 @@ The basic usage of the program is as follows:
 
 Where:
 
-    infile: The file to be used as input.
-    cmd1: The first command to be executed, which reads from the input file.
-    cmd2: The second command, which takes the output of cmd1 as input.
-    outfile: The file where the final output is written.
+infile: The file to be used as input.
+cmd1: The first command to be executed, which reads from the input file.
+cmd2: The second command, which takes the output of cmd1 as input.
+outfile: The file where the final output is written.
 
 Example:
 
@@ -102,16 +102,18 @@ Example:
 
 In this example:
 
-    input.txt: Input file (not used in this specific case as ls -l lists files).
-    "ls -l": Lists files in the current directory.
-    "grep pipex": Filters the output of ls -l for lines containing "pipex".
-    output.txt: The filtered result is written to this file.
+input.txt: Input file (not used in this specific case as ls -l lists files).
+"ls -l": Lists files in the current directory.
+"grep pipex": Filters the output of ls -l for lines containing "pipex".
+output.txt: The filtered result is written to this file.
 
 ## Project Rules
 
-    Global variables are forbidden.
-    The program must properly handle errors (e.g., permission denied, command not found).
-    The use of external libraries other than Libft is prohibited.
-    The project must be implemented in C and comply with the 42 School coding norms.
+Global variables are forbidden.
+The program must properly handle errors (e.g., permission denied, command not found).
+The use of external libraries other than Libft is prohibited.
+The project must be implemented in C and comply with the 42 School coding norms.
 
 ## Authors
+
+- **Ashley Fletcher** - *Developer* - [GitHub Profile](https://github.com/ashleyfletcher76)
