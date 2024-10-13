@@ -72,7 +72,7 @@ test.txt: Example input file for testing.
 To compile the project, run the following commands:
 
 ```bash
-git clone https://github.com/yourusername/pipex.git
+git clone https://github.com/ashleyfletcher76/pipex.git
 cd pipex
 make
 ```
